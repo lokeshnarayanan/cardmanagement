@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- AUTH / PUBLIC CONTAINER -->
+  <main id="auth-container">
+    <!-- Registration Screen -->
+    <section id="register-view" class="view">
+      <h1 class="auth-title">Card Management System</h1>
+      <h2>Create an Account</h2>
+      <form id="register-form">
+        <div class="field">
+          <label for="reg-username">Username</label>
+          <input type="text" id="reg-username" required>
+        </div>
+        <div class="field">
+          <label for="reg-password">Create Password</label>
+          <input type="password" id="reg-password" required>
+        </div>
+        <div class="field">
+          <label for="reg-confirm">Confirm Password</label>
+          <input type="password" id="reg-confirm" required>
+        </div>
+        <p id="reg-error" class="error-msg"></p>
+        <button type="submit" class="btn primary full-width">Create/Register</button>
+        <p class="switch-link">Already have an account? <a href="#" id="link-to-login">Log In</a></p>
+      </form>
+    </section>
+
+    <!-- Login Screen -->
+    <section id="login-view" class="view active">
+      <h1 class="auth-title">Card Management System</h1>
+      <h2>Sign In</h2>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-username">Username</label>
+          <input type="text" id="login-username" required>
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <p id="login-error" class="error-msg"></p>
+        <button type="submit" class="btn primary full-width">Login</button>
+        <div class="auth-links">
+          <a href="#" id="link-to-register">Register</a>
+          <a href="#" id="link-to-forgot">Forgot Password?</a>
+        </div>
+      </form>
+    </section>
+
+    <!-- Forgot Password Screen -->
+    <section id="forgot-view" class="view">
+      <h1 class="auth-title">Card Management System</h1>
+      <h2>Reset Password</h2>
+      <form id="forgot-form">
+        <div class="field">
+          <label for="forgot-username">Username</label>
+          <input type="text" id="forgot-username" required>
+        </div>
+        <div class="field">
+          <label for="forgot-new-pass">New Password</label>
+          <input type="password" id="forgot-new-pass" required>
+        </div>
+        <div class="field">
+          <label for="forgot-confirm-pass">Confirm New Password</label>
+          <input type="password" id="forgot-confirm-pass" required>
+        </div>
+        <p id="forgot-error" class="error-msg"></p>
+        <button type="submit" class="btn primary full-width">Create/Reset Password</button>
+        <p class="switch-link"><a href="#" id="link-forgot-to-login">Back to Login</a></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- APP / AUTHENTICATED CONTAINER -->
+  <div id="app-container" class="hidden">
+    <!-- Top Bar -->
+    <header class="navbar">
+      <button id="hamburger-btn" class="icon-btn" aria-label="Menu">&#9776;</button>
+      <h1 id="page-title">Home</h1>
+      <button id="global-add-btn" class="icon-btn add-btn" aria-label="Add New">+</button>
+    </header>
+
+    <!-- Sidebar / Drawer -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <button id="sidebar-close" class="icon-btn">&times;</button>
+      </div>
+      <ul class="sidebar-menu">
+        <li><button id="nav-home">Home</button></li>
+        <li><button id="nav-profile">Profile</button></li>
+        <li><button id="nav-logout" class="danger">Logout</button></li>
+      </ul>
+    </nav>
+    <div id="sidebar-overlay" class="overlay"></div>
+
+    <!-- Main Content Area -->
+    <div class="content-body">
+      <!-- Home View -->
+      <section id="home-view" class="app-view active">
+        <div class="action-bar">
+          <button id="btn-open-card-modal" class="btn secondary">+ Add Card</button>
+          <button id="btn-open-folder-modal" class="btn secondary">+ Add Folder</button>
+        </div>
+
+        <div class="section-block">
+          <h3>Folders</h3>
+          <div id="folder-list" class="folder-grid"></div>
+        </div>
+
+        <div class="section-block">
+          <div class="cards-header">
+            <h3 id="cards-title">All Cards</h3>
+          </div>
+          <div id="card-list" class="card-grid"></div>
+        </div>
+      </section>
+
+      <!-- Profile View -->
+      <section id="profile-view" class="app-view">
+        <h2>User Profile</h2>
+        <div class="profile-card">
+          <p><strong>Username:</strong> <span id="profile-username"></span></p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Global Add Menu Popup -->
+  <div id="add-menu-modal" class="modal-overlay">
+    <div class="modal-dialog small">
+      <h3>Add New</h3>
+      <button id="menu-add-card" class="btn secondary full-width">Add Card</button>
+      <button id="menu-add-folder" class="btn secondary full-width">Add Folder</button>
+      <button id="menu-close" class="btn text-btn full-width">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Add Card Modal -->
+  <div id="card-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <h3>Add Credit/Debit Card</h3>
+      <form id="card-form">
+        <div class="field">
+          <label for="card-holder">Card Holder Name</label>
+          <input type="text" id="card-holder" required>
+        </div>
+        <div class="field">
+          <label for="bank-name">Bank Name</label>
+          <input type="text" id="bank-name" required>
+        </div>
+        <div class="field">
+          <label for="card-number">Card Number</label>
+          <input type="text" id="card-number" placeholder="16 digits" maxlength="16" required>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="card-expiry">MM/YY</label>
+            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="field">
+            <label for="card-cvv">CVV</label>
+            <input type="password" id="card-cvv" placeholder="3-4 digits" maxlength="4" required>
+          </div>
+        </div>
+        <p id="card-error" class="error-msg"></p>
+        <div class="modal-actions">
+          <button type="button" id="card-cancel-btn" class="btn text-btn">Cancel</button>
+          <button type="submit" class="btn primary">Add Card</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Folder Modal -->
+  <div id="folder-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <h3>Add Folder</h3>
+      <form id="folder-form">
+        <div class="field">
+          <label for="folder-name">Folder Name</label>
+          <input type="text" id="folder-name" required>
+        </div>
+        <p id="folder-error" class="error-msg"></p>
+        <div class="modal-actions">
+          <button type="button" id="folder-cancel-btn" class="btn text-btn">Cancel</button>
+          <button type="submit" class="btn primary">Create Folder</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Assign Card to Folder Modal -->
+  <div id="assign-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <h3>Manage Folder Assignment</h3>
+      <form id="assign-form">
+        <input type="hidden" id="assign-card-id">
+        <div class="field">
+          <label for="assign-folder-select">Select Destination Folder</label>
+          <select id="assign-folder-select"></select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="assign-cancel-btn" class="btn text-btn">Cancel</button>
+          <button type="submit" class="btn primary">Save Assignment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
